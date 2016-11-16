@@ -12,15 +12,14 @@ interface amplifyRequestSettings {
     error?: (...args: any[]) => void;
 }
 
-interface amplifyDecoder {
+type amplifyDecoder =
     (
         data?: any,
         status?: string,
         xhr?: JQueryXHR,
         success?: (...args: any[]) => void,
         error?: (...args: any[]) => void
-        ): void;
-}
+    ) => void;
 
 interface amplifyDecoders {
     [decoderName: string]: amplifyDecoder;
@@ -84,8 +83,9 @@ interface amplifySubscribe {
     * Subscribe to a message.
     * topic: Name of the message to subscribe to.
     * callback: Function to invoke when the message is published.
+    * [priority]: Priority relative to other subscriptions for the same message. Lower values have higher priority. Default is 10.
     */
-    (topic: string, callback: Function): void;
+    (topic: string, callback: Function, priority?: number): void;
     /***
     * Subscribe to a message.
     * topic: Name of the message to subscribe to.
@@ -94,13 +94,6 @@ interface amplifySubscribe {
     * [priority]: Priority relative to other subscriptions for the same message. Lower values have higher priority. Default is 10.
     */
     (topic: string, context: any, callback: Function, priority?: number): void;
-    /***
-    * Subscribe to a message.
-    * topic: Name of the message to subscribe to.
-    * callback: Function to invoke when the message is published.
-    * [priority]: Priority relative to other subscriptions for the same message. Lower values have higher priority. Default is 10.
-    */
-    (topic: string, callback: Function, priority?: number): void;
 }
 interface amplifyStorageTypeStore {
     /***
